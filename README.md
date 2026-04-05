@@ -1,6 +1,22 @@
 # AURA — Visão Absoluta
 
-Landing page premium para a marca **AURA**, uma linha de óculos de sol de design minimalista com precisão óptica, acetato premium e proteção UV400.
+> 🧪 Projeto de estudo desenvolvido para explorar na prática a integração entre **Inteligência Artificial**, **animações com GSAP** e a aplicação de um **Design System** estruturado.
+
+🔗 **[Ver projeto ao vivo →](https://herbertis.github.io/aura-vision/)**
+
+Landing page premium para a marca fictícia **AURA**, uma linha de óculos de sol de design minimalista com precisão óptica, acetato premium e proteção UV400.
+
+O projeto nasceu da curiosidade de entender como IA pode acelerar e potencializar o processo criativo de front-end — da geração de código à aplicação consistente de um Design System, passando por animações fluidas com GSAP e Lenis.
+
+---
+
+## 🎯 Objetivos de Estudo
+
+| Tema | O que foi explorado |
+|---|---|
+| 🤖 Inteligência Artificial | Uso de IA para geração, revisão e documentação de código front-end |
+| 🎞️ GSAP + Lenis | Animações de scroll, parallax, reveal, stagger e smooth scroll |
+| 🎨 Design System | Aplicação prática de tipografia, paleta, componentes e motion guidelines |
 
 ---
 
