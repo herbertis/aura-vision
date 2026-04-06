@@ -27,28 +27,29 @@
 <body class="selection:bg-stone-900 selection:text-white pb-10 bg-grid">
 
     <!-- Header / Navigation -->
-    <header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-stone-200 nav-load">
-        <div class="flex justify-between items-center px-6 py-5 max-w-[1500px] mx-auto">
-            <div class="flex items-center gap-6 hidden md:flex">
-                <a class="text-xs font-semibold tracking-widest text-stone-900 hover:text-stone-400 transition-colors"
-                    href="#">O MODELO</a>
-                <a class="text-xs font-semibold tracking-widest text-stone-900 hover:text-stone-400 transition-colors"
-                    href="#">LENTES</a>
-                <a class="text-xs font-semibold tracking-widest text-stone-900 hover:text-stone-400 transition-colors"
-                    href="#">DESIGN</a>
-            </div>
-            <div class="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 group cursor-pointer">
-                <span class="font-bold tracking-tighter text-xl text-stone-900">AURA</span>
-            </div>
-            <div class="flex items-center gap-6">
-                <!-- <a class="text-xs font-semibold tracking-widest text-stone-900 hover:text-stone-400 transition-colors hidden md:block" href="#">Suporte</a> -->
-                <button
-                    class="px-6 py-2 bg-stone-900 text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-stone-700 transition beam-button interactive-scale glow-on-hover">
-                    Comprar Agora
-                </button>
+<header class="nav-load">
+    <div class="nav-container">
+        <div class="nav-left">
+            <button class="mobile-menu-btn md:hidden">
+                <iconify-icon icon="lucide:menu" class="text-2xl text-stone-900"></iconify-icon>
+            </button>
+            <div class="hidden md:flex gap-6">
+                <a href="#" class="nav-link">O MODELO</a>
+                <a href="#" class="nav-link">DESIGN</a>
             </div>
         </div>
-    </header>
+
+        <div class="logo-aura">
+            <span class="tracking-tighter">AURA</span>
+        </div>
+
+        <div class="nav-right">
+            <button class="buy-btn-nav beam-button interactive-scale">
+                COMPRAR AGORA
+            </button>
+        </div>
+    </div>
+</header>
 
 
     <section class="hero-section" id="hero">
