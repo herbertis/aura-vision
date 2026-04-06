@@ -1,6 +1,7 @@
 /* --- Reset e Variáveis --- */
 :root {
     --nav-height: 70px;
+    --glass-bg: rgba(255, 255, 255, 0.85);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -9,83 +10,99 @@ body {
     background-color: #000;
     color: #fff;
     font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
 }
 
-/* --- HEADER FIX (Mobile & Desktop) --- */
+/* --- HEADER & MENU (A Solução Real) --- */
 .nav-load {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: var(--nav-height);
-    background: rgba(255, 255, 255, 0.9) !important;
+    background: var(--glass-bg);
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     z-index: 9999;
-    display: flex;
-    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* Container da Nav */
-.nav-load > div {
-    display: grid !important; /* Mudamos para Grid para controle total */
-    grid-template-columns: 1fr auto 1fr; /* Esquerda, Centro (Logo), Direita (Botão) */
+.nav-container {
+    display: grid !important;
+    /* Divide em 3 colunas iguais: Esquerda | Centro | Direita */
+    grid-template-columns: 1fr auto 1fr; 
     align-items: center;
-    width: 100%;
+    height: 100%;
     max-width: 1500px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-/* Logo AURA sempre centralizado */
-.logo-aura {
-    grid-column: 2;
-    text-align: center;
-}
+.nav-left { display: flex; align-items: center; }
 
-.logo-aura span {
-    color: #000 !important;
-    font-size: 1.2rem;
+.logo-aura {
+    grid-column: 2; /* Força o logo na coluna central */
+    font-size: 1.25rem;
     font-weight: 800;
+    color: #000 !important;
+    text-align: center;
     letter-spacing: -1px;
 }
 
-/* Botão de Compra no Header */
-.nav-load .flex.items-center.gap-6:last-child {
-    grid-column: 3;
-    justify-self: end;
+.nav-right {
+    display: flex;
+    justify-content: flex-end; /* Botão sempre na ponta direita */
 }
 
-.nav-load button {
-    background-color: #000 !important;
+/* Botão de Compra da Nav */
+.buy-btn-nav {
+    background: #000 !important;
     color: #fff !important;
-    padding: 8px 16px !important;
-    font-size: 10px !important;
+    padding: 10px 20px;
     border-radius: 99px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
 }
 
-/* --- HERO SECTION 100% --- */
+/* Links Desktop */
+.nav-link {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #000;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+/* --- HERO & VIDEO (Fullscreen 100%) --- */
 .hero-section {
     position: relative;
     width: 100vw;
     height: 100dvh;
-    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
 .hero-video-container {
     position: absolute !important;
     inset: 0 !important;
     z-index: 5;
+    background: #000;
 }
 
+/* Filtro Preto 50% */
 .hero-video-container::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5); /* Filtro de 50% */
-    z-index: 7;
+    background: rgba(0, 0, 0, 0.5); 
+    z-index: 6;
 }
 
 #product-video {
@@ -94,22 +111,21 @@ body {
     object-fit: cover !important;
 }
 
-/* --- TEXTO HERO (Branco para Leitura) --- */
+/* --- TEXTO HERO (Branco para Contraste) --- */
 .hero-content {
     position: relative;
     z-index: 10;
+    text-align: center;
     width: 100%;
     padding: 0 20px;
-    text-align: center;
-    pointer-events: none;
 }
-
-.hero-content * { pointer-events: auto; }
 
 .title-anim {
     color: #ffffff !important;
     font-size: clamp(3rem, 10vw, 6rem) !important;
+    font-weight: 800;
     line-height: 0.9;
+    margin-bottom: 10px;
 }
 
 .transparent-text {
@@ -119,42 +135,44 @@ body {
 
 .hero-desc {
     color: rgba(255, 255, 255, 0.8) !important;
-    font-size: 1rem !important;
+    font-size: 1rem;
     margin: 20px auto !important;
-    max-width: 400px;
-}
-
-/* Botoes do Hero */
-.hero-btns {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    align-items: center;
-}
-
-.hero-btns button {
-    width: 100%;
-    max-width: 300px;
-    padding: 16px !important;
+    max-width: 450px;
 }
 
 /* --- MOBILE ADJUSTS --- */
 @media (max-width: 768px) {
-    .nav-load > div {
-        grid-template-columns: 0px 1fr 1fr; /* Remove espaço da esquerda no mobile */
+    .nav-container {
         padding: 0 15px;
-    }
-    
-    .logo-aura {
-        justify-self: start;
-        grid-column: 2;
+        grid-template-columns: 40px 1fr auto; /* Espaço pro burguer | Logo flex | Botão */
     }
 
-    /* Esconde links da nav no mobile se existirem */
-    .md\:flex { display: none !important; }
+    .logo-aura {
+        text-align: center;
+        margin-left: 10px; /* Pequeno ajuste visual */
+    }
+
+    .buy-btn-nav {
+        padding: 8px 14px;
+        font-size: 9px;
+    }
+
+    .hero-content h1 {
+        font-size: 3.2rem !important;
+    }
+
+    /* Empilha botões no mobile */
+    .hero-btns {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
 }
 
-/* Scroll Hint */
+/* --- Scroll Hint Centralizado --- */
 .scroll-hint {
     position: absolute;
     bottom: 30px;
