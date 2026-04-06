@@ -1,266 +1,167 @@
-/* --- 1. Variáveis e Reset Profissional --- */
+/* --- Reset e Variáveis --- */
 :root {
-    --bg-main: #FFFFFF;
-    --text-primary: #FFFFFF; /* Alterado para Branco para leitura sobre o vídeo */
-    --text-muted: rgba(255, 255, 255, 0.7);
-    --accent: #1C1C1C;
     --nav-height: 70px;
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
+    background-color: #000;
+    color: #fff;
     font-family: 'Inter', sans-serif;
-    background-color: #000; /* Fundo preto evita flashes brancos no load */
-    color: var(--text-primary);
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
 }
 
-/* --- 2. Header & Navegação (Correção de Alinhamento) --- */
+/* --- HEADER FIX (Mobile & Desktop) --- */
 .nav-load {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: var(--nav-height);
-    z-index: 100;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.9) !important;
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
 }
 
+/* Container da Nav */
 .nav-load > div {
-    display: flex;
+    display: grid !important; /* Mudamos para Grid para controle total */
+    grid-template-columns: 1fr auto 1fr; /* Esquerda, Centro (Logo), Direita (Botão) */
     align-items: center;
-    justify-content: space-between;
-    height: 100%;
-    padding: 0 5%;
-    max-width: 1500px;
-    margin: 0 auto;
-    position: relative;
-}
-
-/* Logo AURA Centralizado */
-.nav-load .absolute.left-1\/2 {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 101;
-    pointer-events: auto;
-}
-
-/* Botão da Nav */
-.nav-load button {
-    z-index: 102;
-    margin-left: auto; /* Empurra para a direita se o flex falhar */
-}
-
-/* --- 3. Estrutura Hero (Fullscreen 100%) --- */
-.hero-section {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    z-index: 1;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 30;
-    padding: 0 8%;
     width: 100%;
     max-width: 1500px;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    pointer-events: none;
+    padding: 0 20px;
 }
 
-.hero-content * {
-    pointer-events: auto;
+/* Logo AURA sempre centralizado */
+.logo-aura {
+    grid-column: 2;
+    text-align: center;
 }
 
-/* --- 4. Vídeo e Textura Overlay (Contraste) --- */
-.hero-video-container {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100% !important;
-    z-index: 10;
+.logo-aura span {
+    color: #000 !important;
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+/* Botão de Compra no Header */
+.nav-load .flex.items-center.gap-6:last-child {
+    grid-column: 3;
+    justify-self: end;
+}
+
+.nav-load button {
+    background-color: #000 !important;
+    color: #fff !important;
+    padding: 8px 16px !important;
+    font-size: 10px !important;
+    border-radius: 99px;
+}
+
+/* --- HERO SECTION 100% --- */
+.hero-section {
+    position: relative;
+    width: 100vw;
+    height: 100dvh;
     overflow: hidden;
-    background: #000;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* A Textura Preta 50% */
+.hero-video-container {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 5;
+}
+
 .hero-video-container::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5); /* Escurece o vídeo para o texto brilhar */
-    z-index: 15;
-    pointer-events: none;
+    background: rgba(0, 0, 0, 0.5); /* Filtro de 50% */
+    z-index: 7;
 }
 
 #product-video {
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover; /* Preenche 100% da tela sem faixas */
-    z-index: 11;
-    will-change: transform;
+    object-fit: cover !important;
 }
 
-/* --- 5. Tipografia e Estilo Apple Dark --- */
+/* --- TEXTO HERO (Branco para Leitura) --- */
+.hero-content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    padding: 0 20px;
+    text-align: center;
+    pointer-events: none;
+}
+
+.hero-content * { pointer-events: auto; }
+
 .title-anim {
-    color: #FFFFFF !important;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    color: #ffffff !important;
+    font-size: clamp(3rem, 10vw, 6rem) !important;
+    line-height: 0.9;
 }
 
 .transparent-text {
     color: transparent !important;
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4) !important;
-    transition: -webkit-text-stroke 0.3s ease;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5) !important;
 }
 
 .hero-desc {
-    color: var(--text-muted) !important;
-    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-size: 1rem !important;
+    margin: 20px auto !important;
+    max-width: 400px;
 }
 
-/* --- 6. Indicadores e Hints --- */
-.scroll-hint {
-    position: absolute;
-    bottom: 5%;
-    left: 8%;
-    z-index: 40;
+/* Botoes do Hero */
+.hero-btns {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 12px;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #FFFFFF !important;
+    align-items: center;
 }
 
-.scroll-indicator {
-    width: 1px;
-    height: 30px;
-    background: rgba(255, 255, 255, 0.2);
-    position: relative;
-    overflow: hidden;
-}
-
-.scroll-indicator::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
+.hero-btns button {
     width: 100%;
-    height: 100%;
-    background: #FFFFFF;
-    animation: scrollLine 2s infinite ease-in-out;
+    max-width: 300px;
+    padding: 16px !important;
 }
 
-@keyframes scrollLine {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(100%); }
-}
-
-/* --- 7. RESPONSIVIDADE (Mobile Fix) --- */
+/* --- MOBILE ADJUSTS --- */
 @media (max-width: 768px) {
     .nav-load > div {
+        grid-template-columns: 0px 1fr 1fr; /* Remove espaço da esquerda no mobile */
         padding: 0 15px;
     }
-
-    /* Ajuste de escala do título no celular */
-    .hero-content h1 {
-        font-size: 3.2rem !important;
-        text-align: center;
-        width: 100%;
+    
+    .logo-aura {
+        justify-self: start;
+        grid-column: 2;
     }
 
-    .hero-content {
-        padding-top: 60px;
-        align-items: center;
-        text-align: center;
-    }
-
-    .hero-desc {
-        font-size: 16px !important;
-        margin: 20px auto !important;
-    }
-
-    /* Botões Mobile Estilo App */
-    .hero-btns {
-        flex-direction: column;
-        width: 100%;
-        gap: 12px;
-    }
-
-    .hero-btns button {
-        width: 100% !important;
-        justify-content: center;
-        padding: 16px !important;
-    }
-
-    /* Scroll Hint centralizado no mobile */
-    .scroll-hint {
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: 8%;
-    }
-
-    /* Força o vídeo a ignorar Safe Areas e preencher tudo */
-    .hero-video-container {
-        height: 100dvh !important;
-    }
+    /* Esconde links da nav no mobile se existirem */
+    .md\:flex { display: none !important; }
 }
 
-/* --- 8. Extras e Micro-interações --- */
-.beam-button {
-    position: relative;
-    overflow: hidden;
-}
-
-.beam-button::before {
-    content: '';
+/* Scroll Hint */
+.scroll-hint {
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-    transition: left 0.6s ease-in-out;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 2px;
 }
-
-.beam-button:hover::before {
-    left: 100%;
-}
-
-.interactive-scale:active {
-    transform: scale(0.96);
-}
-
-.bg-grid {
-    background-size: 40px 40px;
-    background-image:
-        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-}
-
-/* --- 9. Suporte Lenis --- */
-html.lenis { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto; }
-.lenis.lenis-stopped { overflow: hidden; }
