@@ -1,8 +1,10 @@
-/* --- Variáveis e Reset --- */
+/* --- 1. Variáveis e Reset Profissional --- */
 :root {
     --bg-main: #FFFFFF;
-    --text-primary: #1C1C1C;
-    --text-secondary: rgba(139, 139, 139, 0.733);
+    --text-primary: #FFFFFF; /* Alterado para Branco para leitura sobre o vídeo */
+    --text-muted: rgba(255, 255, 255, 0.7);
+    --accent: #1C1C1C;
+    --nav-height: 70px;
 }
 
 * {
@@ -13,30 +15,52 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--bg-main);
+    background-color: #000; /* Fundo preto evita flashes brancos no load */
     color: var(--text-primary);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
 }
 
-/* --- AJUSTE DA NAVEGAÇÃO (BOTÃO ALINHADO) --- */
+/* --- 2. Header & Navegação (Correção de Alinhamento) --- */
 .nav-load {
-    z-index: 100;
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
+    height: var(--nav-height);
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* Garante que o conteúdo da nav esteja alinhado ao centro verticalmente */
 .nav-load > div {
     display: flex;
-    align-items: center; /* Alinha botão e logo na mesma linha */
+    align-items: center;
     justify-content: space-between;
-    min-height: 70px; /* Altura padrão para consistência */
+    height: 100%;
+    padding: 0 5%;
+    max-width: 1500px;
+    margin: 0 auto;
+    position: relative;
 }
 
-/* --- Estrutura Hero --- */
+/* Logo AURA Centralizado */
+.nav-load .absolute.left-1\/2 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 101;
+    pointer-events: auto;
+}
 
+/* Botão da Nav */
+.nav-load button {
+    z-index: 102;
+    margin-left: auto; /* Empurra para a direita se o flex falhar */
+}
+
+/* --- 3. Estrutura Hero (Fullscreen 100%) --- */
 .hero-section {
     position: relative;
     width: 100vw;
@@ -61,32 +85,31 @@ body {
     pointer-events: none;
 }
 
-.hero-content button,
-.hero-content a {
+.hero-content * {
     pointer-events: auto;
 }
 
-/* --- O VÍDEO (CORREÇÃO MOBILE) --- */
-
+/* --- 4. Vídeo e Textura Overlay (Contraste) --- */
 .hero-video-container {
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;
     width: 100vw !important;
-    height: 100% !important; /* Usar 100% em vez de dvh aqui ajuda no mobile */
+    height: 100% !important;
     z-index: 10;
     overflow: hidden;
+    background: #000;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--bg-main); /* Evita tela preta enquanto carrega */
 }
 
+/* A Textura Preta 50% */
 .hero-video-container::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.5); /* Escurece o vídeo para o texto brilhar */
     z-index: 15;
     pointer-events: none;
 }
@@ -94,16 +117,29 @@ body {
 #product-video {
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover;
+    object-fit: cover; /* Preenche 100% da tela sem faixas */
     z-index: 11;
     will-change: transform;
-    pointer-events: none;
-    /* Força a exibição em alguns navegadores mobile */
-    display: block; 
 }
 
-/* --- Elementos de Interface --- */
+/* --- 5. Tipografia e Estilo Apple Dark --- */
+.title-anim {
+    color: #FFFFFF !important;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
 
+.transparent-text {
+    color: transparent !important;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4) !important;
+    transition: -webkit-text-stroke 0.3s ease;
+}
+
+.hero-desc {
+    color: var(--text-muted) !important;
+    line-height: 1.6;
+}
+
+/* --- 6. Indicadores e Hints --- */
 .scroll-hint {
     position: absolute;
     bottom: 5%;
@@ -112,26 +148,10 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    font-size: 11px;
+    font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: rgb(255, 255, 255);
-}
-
-/* --- Tipografia e Efeitos --- */
-
-.title-anim {
-    display: block;
-}
-
-.text-reveal-wrapper {
-    overflow: hidden;
-    display: inline-block;
-}
-
-.transparent-text {
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(231, 231, 231, 0.3);
+    color: #FFFFFF !important;
 }
 
 .scroll-indicator {
@@ -158,56 +178,57 @@ body {
     100% { transform: translateY(100%); }
 }
 
-/* --- RESPONSIVIDADE MOBILE (AJUSTES FINAIS) --- */
-
+/* --- 7. RESPONSIVIDADE (Mobile Fix) --- */
 @media (max-width: 768px) {
-    /* Alinhamento do Header Mobile */
     .nav-load > div {
-        padding: 10px 20px !important;
+        padding: 0 15px;
     }
 
-    .nav-load button {
-        margin-top: 0 !important; /* Remove qualquer desalinhamento */
-        transform: translateY(0);
+    /* Ajuste de escala do título no celular */
+    .hero-content h1 {
+        font-size: 3.2rem !important;
+        text-align: center;
+        width: 100%;
     }
 
     .hero-content {
-        width: 100%;
-        padding: 0 5%;
-        text-align: center;
+        padding-top: 60px;
         align-items: center;
-    }
-    
-    /* Garante que o título não fique gigante no mobile */
-    .hero-content h1 {
-        font-size: 3rem !important;
-        line-height: 1;
+        text-align: center;
     }
 
+    .hero-desc {
+        font-size: 16px !important;
+        margin: 20px auto !important;
+    }
+
+    /* Botões Mobile Estilo App */
+    .hero-btns {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+    }
+
+    .hero-btns button {
+        width: 100% !important;
+        justify-content: center;
+        padding: 16px !important;
+    }
+
+    /* Scroll Hint centralizado no mobile */
     .scroll-hint {
         left: 50%;
         transform: translateX(-50%);
-        white-space: nowrap;
+        bottom: 8%;
     }
 
-    /* Força o vídeo a ocupar a tela toda sem bordas no mobile */
+    /* Força o vídeo a ignorar Safe Areas e preencher tudo */
     .hero-video-container {
         height: 100dvh !important;
     }
 }
 
-/* --- Interações (Mantidas) --- */
-
-.reveal-element {
-    opacity: 0;
-    transform: translateY(2rem);
-}
-
-.reveal-element.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-
+/* --- 8. Extras e Micro-interações --- */
 .beam-button {
     position: relative;
     overflow: hidden;
@@ -221,31 +242,25 @@ body {
     width: 100%;
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s ease-in-out;
 }
 
 .beam-button:hover::before {
     left: 100%;
-    transition: left 0.5s;
-}
-
-.glow-on-hover:hover {
-    box-shadow: 0 10px 40px rgba(28, 28, 28, 0.1);
-    transform: translateY(-4px);
 }
 
 .interactive-scale:active {
-    transform: scale(0.95);
-    transition: transform 0.1s;
+    transform: scale(0.96);
 }
 
 .bg-grid {
     background-size: 40px 40px;
     background-image:
-        linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
-/* --- Lenis --- */
+/* --- 9. Suporte Lenis --- */
 html.lenis { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto; }
 .lenis.lenis-stopped { overflow: hidden; }
