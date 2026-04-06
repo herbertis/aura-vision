@@ -86,3 +86,72 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
 });
+
+
+
+// --- Lógica do Menu Mobile ---
+const initMobileMenu = () => {
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    const navContainer = document.querySelector('.nav-load');
+    
+    // Criar o elemento do menu lateral dinamicamente ou selecionar se já existir
+    let mobileDrawer = document.querySelector('.mobile-drawer');
+    
+    if (!mobileDrawer) {
+        mobileDrawer = document.createElement('div');
+        mobileDrawer.className = 'mobile-drawer';
+        mobileDrawer.innerHTML = `
+            <div class="drawer-content">
+                <a href="#" class="drawer-link">O MODELO</a>
+                <a href="#" class="drawer-link">LENTES</a>
+                <a href="#" class="drawer-link">DESIGN</a>
+                <a href="#" class="drawer-link">TECNOLOGIA</a>
+                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
+                <button class="buy-btn-nav" style="width: 100%; padding: 15px;">COMPRAR AGORA</button>
+            </div>
+        `;
+        document.body.appendChild(mobileDrawer);
+    }
+
+    let isMenuOpen = false;
+
+    menuBtn.addEventListener('click', () => {
+        isMenuOpen = !isMenuOpen;
+
+        if (isMenuOpen) {
+            // Abrir Menu
+            gsap.to(mobileDrawer, { x: 0, duration: 0.6, ease: "power4.out" });
+            gsap.to('.drawer-link', { opacity: 1, y: 0, stagger: 0.1, delay: 0.2 });
+            
+            // Mudar ícone para "X" (se estiver usando Iconify)
+            menuBtn.querySelector('iconify-icon').setAttribute('icon', 'lucide:x');
+            
+            // Pausar o Scroll do Lenis (importante!)
+            if (typeof lenis !== 'undefined') lenis.stop();
+            
+        } else {
+            // Fechar Menu
+            gsap.to(mobileDrawer, { x: '-100%', duration: 0.6, ease: "power4.in" });
+            menuBtn.querySelector('iconify-icon').setAttribute('icon', 'lucide:menu');
+            
+            // Retomar o Scroll do Lenis
+            if (typeof lenis !== 'undefined') lenis.start();
+        }
+    });
+
+    // Fechar ao clicar em um link
+    const drawerLinks = document.querySelectorAll('.drawer-link');
+    drawerLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            isMenuOpen = false;
+            gsap.to(mobileDrawer, { x: '-100%', duration: 0.5 });
+            menuBtn.querySelector('iconify-icon').setAttribute('icon', 'lucide:menu');
+            if (typeof lenis !== 'undefined') lenis.start();
+        });
+    });
+};
+
+// Chamar a função após o DOM carregar
+document.addEventListener('DOMContentLoaded', () => {
+    initMobileMenu();
+});
