@@ -1,8 +1,11 @@
-/* --- Variáveis e Reset --- */
+/* --- 1. Variáveis e Reset Global --- */
 :root {
     --bg-main: #FFFFFF;
     --text-primary: #1C1C1C;
     --text-secondary: rgba(139, 139, 139, 0.733);
+    --white: #FFFFFF;
+    --black: #000000;
+    --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
@@ -19,139 +22,100 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* --- Estrutura Hero (Fullscreen Real) --- */
-
+/* --- 2. Estrutura Hero (Fullscreen) --- */
 .hero-section {
     position: relative;
     width: 100vw;
     height: 100vh;
     height: 100dvh;
-    /* Altura dinâmica para mobile */
     display: flex;
     align-items: center;
     overflow: hidden;
     z-index: 1;
 }
 
-/* O Conteúdo (Texto) deve flutuar sobre o vídeo e a textura */
-.hero-content {
-    position: relative;
-    z-index: 30;
-    /* Garante que fique na frente de tudo */
-    padding: 0 8%;
-    width: 100%;
-    /* Ocupa a largura total para alinhamento flex */
-    max-width: 1500px;
-    /* Limite opcional para o texto não espalhar demais */
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    pointer-events: none;
-    /* Permite scroll através do texto */
-}
-
-/* Devolve interação aos botões */
-.hero-content button,
-.hero-content a {
-    pointer-events: auto;
-}
-
-/* --- O VÍDEO (Com Textura Overlay) --- */
-
 .hero-video-container {
     position: absolute !important;
-    /* !important para sobrepor inline do GSAP */
     top: 0 !important;
     left: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
     height: 100dvh !important;
     z-index: 10;
-    /* Camada intermediária */
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
-/* --- A Textura/Overlay de Contraste --- */
 .hero-video-container::after {
     content: '';
     position: absolute;
     inset: 0;
-    /* Preenche todo o container: top, left, right, bottom 0 */
-
-    /* Textura preta com 50% de opacidade */
-    background: rgba(0, 0, 0, 0.5);
-
+    background: rgba(0, 0, 0, 0.45); /* Overlay para contraste do texto */
     z-index: 15;
-    /* Acima do vídeo (11), abaixo do texto (30) */
     pointer-events: none;
-    /* Garante que o scroll passe direto */
 }
 
 #product-video {
     width: 100% !important;
     height: 100% !important;
-    /* 'cover' faz o vídeo preencher a tela toda, cortando bordas se necessário. */
     object-fit: cover;
-
     z-index: 11;
-    /* O vídeo em si fica atrás da textura */
     will-change: transform;
+}
+
+/* --- 3. Conteúdo e Tipografia --- */
+.hero-content {
+    position: relative;
+    z-index: 30;
+    padding: 0 8%;
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     pointer-events: none;
 }
 
-/* --- Elementos de Interface --- */
-
-.nav-load {
-    z-index: 100;
+.hero-content button,
+.hero-content a {
+    pointer-events: auto;
 }
 
+.title-anim {
+    display: block;
+    color: var(--white);
+    line-height: 1.1;
+}
+
+.transparent-text {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+    transition: var(--transition-smooth);
+}
+
+.transparent-text:hover {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 1);
+}
+
+/* --- 4. Elementos de Interface (Scroll & Marquee) --- */
 .scroll-hint {
     position: absolute;
     bottom: 5%;
     left: 8%;
     z-index: 40;
-    /* Acima de tudo */
     display: flex;
     align-items: center;
     gap: 12px;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 2px;
-
-    /* Se você tem fundo escuro, mude para branco */
-    color: rgb(255, 255, 255);
+    color: var(--white);
 }
-
-/* --- Tipografia e Efeitos --- */
-
-.title-anim {
-    display: block;
-    /* Se o overlay estiver escuro, considere mudar a cor do texto para branco */
-    /* color: #FFFFFF; */
-}
-
-.text-reveal-wrapper {
-    overflow: hidden;
-    display: inline-block;
-}
-
-.transparent-text {
-    color: transparent;
-    /* Se o overlay for escuro, mude o stroke para rgba(255, 255, 255, 0.3) */
-    -webkit-text-stroke: 1px rgba(231, 231, 231, 0.3);
-}
-
-/* --- Indicador de Scroll --- */
 
 .scroll-indicator {
     width: 1px;
     height: 30px;
-    /* Se o overlay for escuro, mude para rgba(255, 255, 255, 0.2) */
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.2);
     position: relative;
     overflow: hidden;
 }
@@ -159,142 +123,122 @@ body {
 .scroll-indicator::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Se o overlay for escuro, mude para #FFFFFF */
-    background: var(--text-primary);
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--white);
     animation: scrollLine 2s infinite ease-in-out;
 }
 
 @keyframes scrollLine {
-    0% {
-        transform: translateY(-100%);
-    }
-
-    100% {
-        transform: translateY(100%);
-    }
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
 }
 
-/* --- Responsividade Mobile --- */
-/* --- Ajustes Mobile (Imagem Anexa) --- */
-
+/* --- 5. AJUSTES MOBILE (Conforme Imagem) --- */
 @media (max-width: 768px) {
-    /* 1. Ajuste do Menu Topo */
-   .nav-load {
+    
+    /* Menu Topo: Alinhamento Horizontal & Respiro */
+    .nav-load {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        height: 70px; /* Altura definida para controle de respiro */
-        padding: 0 6%; /* "Respiração" nas laterais */
+        height: 85px; /* Altura para gerar "respiro" */
+        padding: 0 6%;
         display: flex;
-        flex-direction: row; /* Garante alinhamento horizontal */
-        justify-content: space-between; /* Espaça os elementos igualmente */
-        align-items: center; /* Alinha verticalmente no centro */
-        background-color: rgba(255, 255, 255, 0.05); /* Leve fundo para leitura se necessário */
-        backdrop-filter: blur(10px); /* Efeito moderno de vidro */
+        flex-direction: row;
+        justify-content: space-between; /* Burger | Logo | Carrinho */
+        align-items: center;
         z-index: 1000;
+        background-color: transparent;
     }
 
-    /* Ajuste para o Menu Burger e Carrinho (se forem ícones/links) */
     .nav-load .menu-burger,
     .nav-load .cart-icon {
+        width: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 40px;
-        height: 40px;
-        cursor: pointer;
-    }
-
-    /* Garantir que a Logo não cresça demais e fique centralizada visualmente */
-    .nav-load .logo {
-        height: 24px; /* Ajuste conforme o tamanho da sua logo */
-        width: auto;
-        flex-shrink: 0;
-    }
-
-    /* Ajuste de cor para ícones (caso o fundo seja escuro no mobile) */
-    .nav-load svg, 
-    .nav-load i {
-        color: #FFFFFF; /* Ou a cor desejada */
+        color: var(--white);
         font-size: 20px;
     }
 
-    .hero-section {
-        padding-top: 70px;
+    .nav-load .logo {
+        height: 18px; /* Logo elegante e centralizada */
+        width: auto;
     }
 
-    /* 2. Centralização e Espaçamento do Conteúdo */
+    /* Hero Content Mobile */
     .hero-content {
-        padding-top: 60px; /* Espaço para não bater no menu */
-        gap: 20px;
+        padding: 0 6%;
+        text-align: center;
+        align-items: center;
+        gap: 15px;
     }
 
-    /* 3. Estilização dos Botões conforme o layout */
-    .hero-content .cta-container { /* Certifique-se de que seus botões estão dentro de um container */
+    .title-anim {
+        font-size: 2.8rem;
+    }
+
+    /* Container de Botões Centralizados */
+    .cta-container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 15px;
+        gap: 12px;
         width: 100%;
         margin-top: 30px;
+        pointer-events: auto;
     }
 
-    /* Botão Comprar Agora (Preto) */
-    .hero-content button, 
-    .hero-content .btn-primary {
-        background-color: #1c1c1c;
-        color: #fff;
+    /* Botão Primário (Preto/Comprar) */
+    .btn-primary, .hero-content button {
+        background-color: var(--black);
+        color: var(--white);
         border-radius: 50px;
-        padding: 16px 40px;
-        border: none;
-        width: 80%; /* Ajuste conforme preferência */
+        padding: 18px 0;
+        width: 85%;
         max-width: 300px;
+        border: none;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 1px;
+        font-size: 13px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
     }
 
-    /* Botão Explorar (Vazado/Transparente) */
-    .hero-content .btn-secondary,
-    .hero-content a.explorar {
-        background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.6);
-        color: #fff;
+    /* Botão Secundário (Transparente/Explorar) */
+    .btn-secondary, a.explorar {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: var(--white);
         border-radius: 50px;
-        padding: 16px 40px;
-        width: 80%;
+        padding: 18px 0;
+        width: 85%;
         max-width: 300px;
         text-align: center;
         text-decoration: none;
+        text-transform: uppercase;
+        font-size: 13px;
+        backdrop-filter: blur(5px);
     }
 
-    /* 4. Ajuste do "Role para Interagir" */
+    /* Scroll Hint Mobile Centralizado */
     .scroll-hint {
-        bottom: 30px;
-        width: 100%;
-        justify-content: center;
-        opacity: 0.8;
-    }
-
-    /* Ajuste de escala para o título mobile */
-    .title-anim {
-        font-size: 2.5rem; /* Ajuste conforme necessário */
-        line-height: 1.1;
-        color: #FFFFFF;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 40px;
+        opacity: 0.7;
     }
 }
 
-/* --- Reusable Interactions & Patterns --- */
-
+/* --- 6. Interações e Suporte (Lenis/GSAP) --- */
 .reveal-element {
     opacity: 0;
     transform: translateY(2rem);
-    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: var(--transition-smooth);
 }
 
 .reveal-element.active {
@@ -302,103 +246,6 @@ body {
     transform: translateY(0);
 }
 
-.transparent-text:hover {
-    -webkit-text-stroke: 1px rgba(231, 231, 231, 1);
-}
-
-/* Beam Button Animation */
-@keyframes shimmer {
-    from {
-        transform: translateX(-100%) skewX(-15deg);
-    }
-
-    to {
-        transform: translateX(200%) skewX(-15deg);
-    }
-}
-
-.beam-button {
-    position: relative;
-    overflow: hidden;
-}
-
-.beam-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-    transition: left 0.5s;
-}
-
-.beam-button:hover::before {
-    left: 100%;
-}
-
-/* Glow Effects */
-.glow-on-hover {
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.glow-on-hover:hover {
-    box-shadow: 0 10px 40px rgba(28, 28, 28, 0.1);
-    transform: translateY(-4px);
-}
-
-/* Micro-interactions */
-.interactive-scale {
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.interactive-scale:active {
-    transform: scale(0.95);
-}
-
-/* Marquee Animation */
-@keyframes marquee {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(-50%);
-    }
-}
-
-.marquee-container {
-    display: flex;
-    overflow: hidden;
-    user-select: none;
-    width: 100%;
-}
-
-.marquee-content {
-    flex-shrink: 0;
-    display: flex;
-    justify-content: space-around;
-    min-width: 100%;
-    animation: marquee 30s linear infinite;
-}
-
-/* Bg Grid */
-.bg-grid {
-    background-size: 40px 40px;
-    background-image:
-        linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-}
-
-/* --- Suporte Lenis --- */
-html.lenis {
-    height: auto;
-}
-
-.lenis.lenis-smooth {
-    scroll-behavior: auto;
-}
-
-.lenis.lenis-stopped {
-    overflow: hidden;
-}
+html.lenis { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto; }
+.lenis.lenis-stopped { overflow: hidden; }
