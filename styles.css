@@ -179,18 +179,79 @@ body {
 }
 
 /* --- Responsividade Mobile --- */
+/* --- Ajustes Mobile (Imagem Anexa) --- */
 
 @media (max-width: 768px) {
-    .hero-content {
-        width: 100%;
-        padding: 0 5%;
-        text-align: center;
+    /* 1. Ajuste do Menu Topo */
+    .nav-load {
+        padding: 20px 5%;
+        display: flex;
+        justify-content: space-between;
         align-items: center;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
     }
 
+    /* 2. Centralização e Espaçamento do Conteúdo */
+    .hero-content {
+        padding-top: 60px; /* Espaço para não bater no menu */
+        gap: 20px;
+    }
+
+    /* 3. Estilização dos Botões conforme o layout */
+    .hero-content .cta-container { /* Certifique-se de que seus botões estão dentro de um container */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    /* Botão Comprar Agora (Preto) */
+    .hero-content button, 
+    .hero-content .btn-primary {
+        background-color: #1c1c1c;
+        color: #fff;
+        border-radius: 50px;
+        padding: 16px 40px;
+        border: none;
+        width: 80%; /* Ajuste conforme preferência */
+        max-width: 300px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Botão Explorar (Vazado/Transparente) */
+    .hero-content .btn-secondary,
+    .hero-content a.explorar {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        color: #fff;
+        border-radius: 50px;
+        padding: 16px 40px;
+        width: 80%;
+        max-width: 300px;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    /* 4. Ajuste do "Role para Interagir" */
     .scroll-hint {
-        left: 50%;
-        transform: translateX(-50%);
+        bottom: 30px;
+        width: 100%;
+        justify-content: center;
+        opacity: 0.8;
+    }
+
+    /* Ajuste de escala para o título mobile */
+    .title-anim {
+        font-size: 2.5rem; /* Ajuste conforme necessário */
+        line-height: 1.1;
+        color: #FFFFFF;
     }
 }
 
