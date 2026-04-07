@@ -183,15 +183,49 @@ body {
 
 @media (max-width: 768px) {
     /* 1. Ajuste do Menu Topo */
-    .nav-load {
-        padding: 20px 5%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
+   .nav-load {
         position: fixed;
         top: 0;
         left: 0;
+        width: 100%;
+        height: 70px; /* Altura definida para controle de respiro */
+        padding: 0 6%; /* "Respiração" nas laterais */
+        display: flex;
+        flex-direction: row; /* Garante alinhamento horizontal */
+        justify-content: space-between; /* Espaça os elementos igualmente */
+        align-items: center; /* Alinha verticalmente no centro */
+        background-color: rgba(255, 255, 255, 0.05); /* Leve fundo para leitura se necessário */
+        backdrop-filter: blur(10px); /* Efeito moderno de vidro */
+        z-index: 1000;
+    }
+
+    /* Ajuste para o Menu Burger e Carrinho (se forem ícones/links) */
+    .nav-load .menu-burger,
+    .nav-load .cart-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+    }
+
+    /* Garantir que a Logo não cresça demais e fique centralizada visualmente */
+    .nav-load .logo {
+        height: 24px; /* Ajuste conforme o tamanho da sua logo */
+        width: auto;
+        flex-shrink: 0;
+    }
+
+    /* Ajuste de cor para ícones (caso o fundo seja escuro no mobile) */
+    .nav-load svg, 
+    .nav-load i {
+        color: #FFFFFF; /* Ou a cor desejada */
+        font-size: 20px;
+    }
+
+    .hero-section {
+        padding-top: 70px;
     }
 
     /* 2. Centralização e Espaçamento do Conteúdo */
